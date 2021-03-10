@@ -1,0 +1,33 @@
+{
+  "author": {
+    "email": "carl.broadbent@gmail.com",
+    "name": "Carl Broadbent"
+  },
+  "dependencies": {},
+  "description": "Functions related to unicode strings",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.17.0",
+    "@typescript-eslint/parser": "^4.17.0",
+    "eslint": "^7.21.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "keywords": [
+    "escape",
+    "strings",
+    "unescape",
+    "unicode"
+  ],
+  "license": "MIT",
+  "main": "dist/UnicodeStrings.js",
+  "name": "unicode-strings",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf ./dist",
+    "lint": "eslint . --ext .ts",
+    "prepare": "npm run build && npm run removeDev",
+    "removeDev": "rm -rf .vscode scripts src .eslintrc.json .gitignore tsconfig.json"
+  },
+  "types": "dist/UnicodeStrings.d.ts",
+  "version": "0.1.0"
+}
