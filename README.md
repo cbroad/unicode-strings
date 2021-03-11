@@ -40,8 +40,8 @@ console.log( unicodeString );
 ## API
 | Function | Description |
 | --- | --- |
-| [`UnicodeStrings.escapeString()`](#UnicodeStrings_escapeString) | Blah |
-| [`UnicodeStrings.unescapeString()`](#UnicodeStrings_unescapeString) | Blah |
+| [`UnicodeStrings.escapeString()`](#unicodestringsescapestringstr) | Blah |
+| [`UnicodeStrings.unescapeString()`](#unicodestringsunescapestringstr) | Blah |
 
 <br/><br/>
 
