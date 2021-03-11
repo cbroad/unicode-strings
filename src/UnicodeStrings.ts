@@ -1,8 +1,9 @@
+import Stream from "stream";
 
 /**
  * Map between characters used in backslash-escaped characters and their values.
  */
-const ESCAPE_MAPPINGS: { [key: string]: string} = {
+const ESCAPE_MAPPINGS: { [ key: string ]: string } = {
 	b: "\x08",
 	f: "\x0c",
 	n: "\x0a",
@@ -14,13 +15,12 @@ const ESCAPE_MAPPINGS: { [key: string]: string} = {
 /**
  * Reversal of ESCAPE_MAPPINGS for reverse lookup.
  */
-const ESCAPE_MAPPINGS_REV: { [key: string]: string} = Object.entries(ESCAPE_MAPPINGS).reduce( (R, [k,v]) => ( { ...R, [v]:k, } ), {} );
+const ESCAPE_MAPPINGS_REV: { [ key: string ]: string } = Object.entries(ESCAPE_MAPPINGS).reduce( (R, [k,v]) => ( { ...R, [v]:k, } ), {} );
 
 /**
  * Regular Expression identifying unique encoded "characters" in a string.
  */
 const ESCAPE_SEQUENCE_REGEX = /\\(?:([bfnrtv])|([0-8]{2})|x([0-9a-f]{2})|u([0-9a-f]{4})|U([0-9a-f]{8})|(.))/g;
-
 
 /**
  * Transforms a string.  Any unicode characters will be backslash-escaped
@@ -36,7 +36,7 @@ const ESCAPE_SEQUENCE_REGEX = /\\(?:([bfnrtv])|([0-8]{2})|x([0-9a-f]{2})|u([0-9a
  * @param {string} str a string possibly containing unicode characters
  * @returns {string} encoded string
  */
-function escape( str: string ): string {
+function escapeString( str: string ): string {
 	return str.split("").map(unicodeEscapeChar).join("");
 }
 
@@ -54,17 +54,17 @@ function escape( str: string ): string {
  * @param {string} str a string possibly containing escaped characters
  * @returns {string} decoded string
  */
-function unescape( str: string ): string {
-	return str.replace(ESCAPE_SEQUENCE_REGEX, (fullMatch:string, bfnrtvMatch:string, octalMatch:string, hexMatch8:string, hexMatch16:string, hexMatch32:string, otherMatch:string) => {
-		if(bfnrtvMatch) { return ESCAPE_MAPPINGS[bfnrtvMatch]; }
-		if(octalMatch) { return String.fromCharCode(parseInt(octalMatch, 8)); }
-		if(hexMatch8||hexMatch16||hexMatch32) { return String.fromCharCode(parseInt(hexMatch8||hexMatch16||hexMatch32, 16) ); }
+function unescapeString( str: string ): string {
+	return str.replace( ESCAPE_SEQUENCE_REGEX, (fullMatch:string, bfnrtvMatch:string, octalMatch:string, hexMatch8:string, hexMatch16:string, hexMatch32:string, otherMatch:string ) => {
+		if( bfnrtvMatch )                           { return ESCAPE_MAPPINGS[bfnrtvMatch]; }
+		if( octalMatch )                            { return String.fromCharCode(parseInt(octalMatch, 8)); }
+		if( hexMatch8 || hexMatch16 || hexMatch32 ) { return String.fromCharCode(parseInt(hexMatch8||hexMatch16||hexMatch32, 16) ); }
 		return otherMatch;
 	} )
 	;
 }
 
-export { escape, unescape };
+export { escapeString, unescapeString };
 
 /**
  * Escapes a unicode character.  If the character is escaped, it will be
@@ -83,10 +83,10 @@ export { escape, unescape };
 function unicodeEscapeChar( char: string ) {
 	if( ESCAPE_MAPPINGS_REV[char] )  { return `\\${ESCAPE_MAPPINGS_REV[char]}`; }
 	const n = char.charCodeAt(0);
-	if(n<0x20)    { return `\\${n.toString(8)}`; }
-	if(n<0x80)    { return char; }
-	if(n<0x100)   { return `\\x${zeroPadHex(n, 2)}`; }
-	if(n<0x10000) { return `\\u${zeroPadHex(n, 4)}`; }
+	if( n<0x20 )    { return `\\${n.toString(8)}`; }
+	if( n<0x80 )    { return char; }
+	if( n<0x100 )   { return `\\x${zeroPadHex(n, 2)}`; }
+	if( n<0x10000 ) { return `\\u${zeroPadHex(n, 4)}`; }
 	return `\\U${zeroPadHex(n, 8)}`;
 }
 
