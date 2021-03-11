@@ -1,8 +1,8 @@
 # unicode-strings
 
-**About**
+## About
 
-The unicode-strings was written to make 
+The unicode-strings module was written to make transforming strings from Unicode to ASCII simpler.  This transformation may come in useful when trying to use strings with systems that aren't compatible with the extended Unicode character set.
 
 
 **1. Installation**
@@ -37,3 +37,6 @@ const unicodeString = unescapeString("Good Morning! \u304a\u306f\u3088\u3046\u30
 console.log( unescapedString );
 // Good Morning! おはようございます 🐡
 ```
+
+
+## API
