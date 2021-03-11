@@ -20,7 +20,7 @@ const ESCAPE_MAPPINGS_REV: { [ key: string ]: string } = Object.entries(ESCAPE_M
 /**
  * Regular Expression identifying unique encoded "characters" in a string.
  */
-const ESCAPE_SEQUENCE_REGEX = /\\(?:([bfnrtv])|([0-8]{2})|x([0-9a-f]{2})|u([0-9a-f]{4})|U([0-9a-f]{8})|(.))/g;
+const ESCAPE_SEQUENCE_REGEX = /\\(?:([bfnrtv])|([0-8]{2})|x([0-9a-f]{2})|u([0-9a-f]{4})|(.))/g;
 
 /**
  * Transforms a string.  Any unicode characters will be backslash-escaped
@@ -47,18 +47,17 @@ function escapeString( str: string ): string {
  * Escape characters decoded include:
  *  * "\b", "\f", "\n", "\r", "\t", "\v"
  *  * "\oo"        - 2-digit octal-value for characters with value<0x20
- *  * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<value<0x100
- *  * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<0x10000
- *  * "\UXXXXXXXX" - 8-digit hex-value for characters with value such that value>=0x10000
+ *  * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<=value<0x100
+ *  * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<0xffff
  * 
  * @param {string} str a string possibly containing escaped characters
  * @returns {string} decoded string
  */
 function unescapeString( str: string ): string {
-	return str.replace( ESCAPE_SEQUENCE_REGEX, (fullMatch:string, bfnrtvMatch:string, octalMatch:string, hexMatch8:string, hexMatch16:string, hexMatch32:string, otherMatch:string ) => {
-		if( bfnrtvMatch )                           { return ESCAPE_MAPPINGS[bfnrtvMatch]; }
-		if( octalMatch )                            { return String.fromCharCode(parseInt(octalMatch, 8)); }
-		if( hexMatch8 || hexMatch16 || hexMatch32 ) { return String.fromCharCode(parseInt(hexMatch8||hexMatch16||hexMatch32, 16) ); }
+	return str.replace( ESCAPE_SEQUENCE_REGEX, (fullMatch:string, bfnrtvMatch:string, octalMatch:string, hexMatch8:string, hexMatch16:string, otherMatch:string ) => {
+		if( bfnrtvMatch )             { return ESCAPE_MAPPINGS[bfnrtvMatch]; }
+		if( octalMatch )              { return String.fromCharCode(parseInt(octalMatch, 8)); }
+		if( hexMatch8 || hexMatch16 ) { return String.fromCharCode(parseInt(hexMatch8||hexMatch16, 16) ); }
 		return otherMatch;
 	} )
 	;
@@ -73,9 +72,8 @@ export { escapeString, unescapeString };
  * Escape characters encoded include:
  *  * "\b", "\f", "\n", "\r", "\t", "\v"
  *  * "\oo"        - 2-digit octal-value for characters with value<0x20
- *  * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<value<0x100
- *  * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<0x10000
- *  * "\UXXXXXXXX" - 8-digit hex-value for characters with value such that value>=0x10000
+ *  * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<=value<=0xff
+ *  * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<=0xffff
  * 
  * @param {string} char unicode character to ascii-encode
  * @returns {string} encoded string
@@ -83,11 +81,10 @@ export { escapeString, unescapeString };
 function unicodeEscapeChar( char: string ) {
 	if( ESCAPE_MAPPINGS_REV[char] )  { return `\\${ESCAPE_MAPPINGS_REV[char]}`; }
 	const n = char.charCodeAt(0);
-	if( n<0x20 )    { return `\\${n.toString(8)}`; }
-	if( n<0x80 )    { return char; }
-	if( n<0x100 )   { return `\\x${zeroPadHex(n, 2)}`; }
-	if( n<0x10000 ) { return `\\u${zeroPadHex(n, 4)}`; }
-	return `\\U${zeroPadHex(n, 8)}`;
+	if( n<0x20 )  { return `\\${n.toString(8)}`; }
+	if( n<0x80 )  { return char; }
+	if( n<0x100 ) { return `\\x${zeroPadHex(n, 2)}`; }
+	return `\\u${zeroPadHex(n, 4)}`;
 }
 
 /**

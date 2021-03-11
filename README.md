@@ -53,9 +53,8 @@ using the method producing the shortest length possible.
 Escape characters encoded include:
  * "\b", "\f", "\n", "\r", "\t", "\v"
  * "\oo"        - 2-digit octal-value for characters with value<0x20
- * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<value<0x100
- * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<0x10000
- * "\UXXXXXXXX" - 8-digit hex-value for characters with value such that value>=0x10000
+ * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<=value<=0xff
+ * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<=0xffff
  
 |  |  |
 | --- | --- |
@@ -72,9 +71,8 @@ unicode character equivalents.
 Escape characters decoded include:
  * "\b", "\f", "\n", "\r", "\t", "\v"
  * "\oo"        - 2-digit octal-value for characters with value<0x20
- * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<value<0x100
- * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<0x10000
- * "\UXXXXXXXX" - 8-digit hex-value for characters with value such that value>=0x10000
+ * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<=value<=0xff
+ * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<=0xffff
 
 |  |  |
 | --- | --- |
