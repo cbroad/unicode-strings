@@ -42,6 +42,7 @@ console.log( unicodeString );
 | --- | --- |
 | [`UnicodeStrings.escapeString()`](#unicodestringsescapestring-str-) | Blah |
 | [`UnicodeStrings.unescapeString()`](#unicodestringsunescapestring-str-) | Blah |
+| [`UnicodeStrings.unicodeEscapeString()`](#unicodestringsunicodeescapestring-str-) | Blah |
 
 <br/><br/>
 
@@ -65,14 +66,31 @@ Escape characters encoded include:
 
 ### UnicodeStrings.unescapeString( str ) ###
 
-Transforms a string.  Any escape sequences will be converted to their
-unicode character equivalents.
+Transforms a string.  Any escape sequences will be converted to their character
+equivalents.
 
 Escape characters decoded include:
  * "\b", "\f", "\n", "\r", "\t", "\v"
  * "\oo"        - 2-digit octal-value for characters with value<0x20
  * "\xXX"       - 2-digit hex-value for characters with value such that 0x80<=value<=0xff
  * "\uXXXX"     - 4-digit hex-value for characters with value such that 0x100<=value<=0xffff
+
+|  |  |
+| --- | --- |
+| str | a string possibly containing escaped characters |
+| *returns* | decoded string |
+
+<br/><br/>
+
+### UnicodeStrings.unicodeEscapeString( str ) ###
+
+Transforms a string.  Only uses single character escape sequences and unicode
+escape sequences.  This is useful because only these escape sequences are
+allowed in JSON formatted data.
+
+Escape characters decoded include:
+ * "\b", "\f", "\n", "\r", "\t", "\v"
+ * "\uXXXX"     - 4-digit hex-value for characters with value not in the range that 0x20<=value<0x80
 
 |  |  |
 | --- | --- |
