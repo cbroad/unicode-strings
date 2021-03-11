@@ -25,7 +25,6 @@ import { escapeString, unescapeString } from "unicode-strings"
 const UnicodeStrings = require( "unicode-strings" );
 // Alternatively
 const { escapeString, unescapeString } = require( "unicode-strings" );
-~                               
 ```
 
 **3. Usage**
