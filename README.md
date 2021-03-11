@@ -40,12 +40,12 @@ console.log( unicodeString );
 ## API
 | Function | Description |
 | --- | --- |
-| [`UnicodeStrings.escapeString()`](#unicodestringsescapestringstr) | Blah |
-| [`UnicodeStrings.unescapeString()`](#unicodestringsunescapestringstr) | Blah |
+| [`UnicodeStrings.escapeString()`](#unicodestringsescapestring-str-) | Blah |
+| [`UnicodeStrings.unescapeString()`](#unicodestringsunescapestring-str-) | Blah |
 
 <br/><br/>
 
-### UnicodeStrings.escapeString( str )
+### UnicodeStrings.escapeString( str ) ###
 
 Transforms a string.  Any unicode characters will be backslash-escaped
 using the method producing the shortest length possible.
@@ -64,7 +64,7 @@ Escape characters encoded include:
  
 <br/><br/>
 
-### UnicodeStrings.unescapeString( str )
+### UnicodeStrings.unescapeString( str ) ###
 
 Transforms a string.  Any escape sequences will be converted to their
 unicode character equivalents.
