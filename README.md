@@ -32,7 +32,7 @@ const { escapeString, unescapeString } = require( "unicode-strings" );
 const asciiString = UnicodeStrings.escapeString("Good Morning! おはようございます 🐡");
 console.log( asciiString );
 // Good Morning! \u304a\u306f\u3088\u3046\u3054\u3056\u3044\u307e\u3059 \ud83d\udc21
-const unicodeString = unescapeString("Good Morning! \u304a\u306f\u3088\u3046\u3054\u3056\u3044\u307e\u3059 \Ud83ddc21");
+const unicodeString = unescapeString("Good Morning! \u304a\u306f\u3088\u3046\u3054\u3056\u3044\u307e\u3059 \ud83d\udc21");
 console.log( unicodeString );
 // Good Morning! おはようございます 🐡
 ```
